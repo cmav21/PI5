@@ -45,7 +45,7 @@ public class RepositorioController {
         return null;
     }
 
-    @PutMapping(path="/edit/{idr}")
+    @PostMapping(path="/edit/{idr}")
     public @ResponseBody RepositorioModel editRepository(@PathVariable String idr,
                                                          @RequestBody Map<String, String> body){
         Optional<RepositorioModel> r = repositorioRepository.findById(Long.parseLong(idr));
