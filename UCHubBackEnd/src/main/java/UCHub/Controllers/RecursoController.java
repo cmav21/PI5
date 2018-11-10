@@ -167,4 +167,17 @@ public class RecursoController {
         return null;
     }
 
+    @DeleteMapping("/{id}")
+    public @ResponseBody RecursoModel deleteResource(@PathVariable (value = "id") String id){
+        Optional<RecursoModel> recurso = recursoRepository.findById(Long.parseLong(id));
+
+        Optional<RecursoModel> temp = recurso;
+
+        if(recurso.isPresent()){
+            recursoRepository.delete(recurso.get());
+        }
+        return temp.get();
+    }
+
+
 }
