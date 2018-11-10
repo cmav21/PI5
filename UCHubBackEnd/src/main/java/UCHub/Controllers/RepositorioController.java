@@ -48,6 +48,7 @@ public class RepositorioController {
     @PostMapping(path="/edit/{idr}")
     public @ResponseBody RepositorioModel editRepository(@PathVariable String idr,
                                                          @RequestBody Map<String, String> body){
+        System.out.println("im in");
         Optional<RepositorioModel> r = repositorioRepository.findById(Long.parseLong(idr));
         if(r.isPresent()){
             r.get().setDescripcion(body.get("descripcion"));
