@@ -45,6 +45,20 @@ public class RepositorioController {
         return null;
     }
 
+    @PutMapping(path="/{id}")
+    public @ResponseBody RepositorioModel editRepository(@PathVariable Integer id,
+                                                         @RequestBody Map<String, String> body){
+        Optional<RepositorioModel> r = repositorioRepository.findById((long)id);
+        if(r.isPresent()){
+            r.get().setDescripcion(body.get("descripcion"));
+            r.get().setEtiquetas(body.get("etiquetas"));
+            r.get().setNombre(body.get("nombre"));
+            repositorioRepository.save(r.get());
+            return r.get();
+        }
+        return null;
+    }
+
     @GetMapping(path="/{id}")
     public @ResponseBody RepositorioModel getRepo(@PathVariable String id){
         Optional<RepositorioModel> repo = repositorioRepository.findById(Long.parseLong(id));
@@ -95,19 +109,5 @@ public class RepositorioController {
         repo.ifPresent(repositorioModel -> repositorioRepository.delete(repositorioModel));
 
         return repositorioRepository.findAll();
-    }
-
-    @PostMapping(path="/{id}/edit")
-    public @ResponseBody RepositorioModel editRepository(@PathVariable(value="id") Integer id,
-                                                         @RequestBody Map<String, String> body){
-        Optional<RepositorioModel> r = repositorioRepository.findById((long)id);
-        if(r.isPresent()){
-            r.get().setDescripcion(body.get("descripcion"));
-            r.get().setEtiquetas(body.get("etiquetas"));
-            r.get().setNombre(body.get("nombre"));
-            repositorioRepository.save(r.get());
-            return r.get();
-        }
-        return null;
     }
 }
